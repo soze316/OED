@@ -1,18 +1,20 @@
 import streamlit as st
 import requests
 import json
+import os
 
 def search_oed(word):
     app_id = "1ef445a3"
     app_key = "963b716e198d3825f6dbbb8103200edc"
     language = "en-gb"
-    url = f"https://od-api-sandbox.oxforddictionaries.com:443/api/v2/entries/{language}/{word.lower()}"
+    url = f"https://od-api-sandbox.oxforddictionaries.com:443/api/v2/search/{language}/{word.lower()}"
     
     headers = {
         "app_id": app_id,
         "app_key": app_key,
     }
-    
+    st.write(f"App id: {app_id}")
+    st.write(f"App key: {app_key}")
     response = requests.get(url, headers=headers)
     
     if response.status_code == 200:
@@ -28,6 +30,7 @@ search_button = st.button("Search")
 
 if search_button and search_word:
     result = search_oed(search_word)
+    st.write(result)
     
     if result:
         st.subheader(f"Definition for '{search_word}':")
